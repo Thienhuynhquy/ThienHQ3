@@ -5,8 +5,8 @@ data:
   AWS_PROFILE: 'UdagramDev'
   AWS_REGION: 'us-east-1'
   JWT_SECRET: 'hello'
-  POSTGRES_DB: 'udagram'
-  POSTGRES_HOST: 'cdr-dev.cvga54k6pymy.us-east-1.rds.amazonaws.com'
+  POSTGRES_DB: 'postgresdb'
+  POSTGRES_HOST: 'postgres-db.c1ad8jpgvcns.us-east-1.rds.amazonaws.com'
   URL: http://localhost:8100  
 metadata:
   name: env-config
