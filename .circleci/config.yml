@@ -1,0 +1,31 @@
+version: 2.1
+
+jobs:
+ build:
+   machine:
+    image: ubuntu-2204:2022.04.2
+    # environment:
+    #   SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
+   steps:
+    - checkout
+    - run: docker --version
+    - run: docker build -t udagram-api-feed ./project/udagram-api-feed
+    - run: docker tag udagram-api-feed thienhuynhquy/udagram-api-feed:latest
+    - run: |
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker push thienhuynhquy/udagram-api-feed
+    - run: docker build -t udagram-api-user ./project/udagram-api-user
+    - run: docker tag udagram-api-user thienhuynhquy/udagram-api-user:latest
+    - run: |
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker push thienhuynhquy/udagram-api-user
+    - run: docker build -t udagram-frontend ./project/udagram-frontend
+    - run: docker tag udagram-frontend thienhuynhquy/udagram-frontend:latest
+    - run: |
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker push thienhuynhquy/udagram-frontend
+    - run: docker build -t reverseproxy ./project/udagram-reverseproxy
+    - run: docker tag reverseproxy thienhuynhquy/reverseproxy:latest
+    - run: |
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker push thienhuynhquy/reverseproxy
